@@ -1,20 +1,13 @@
 numpy
-Pillow
 streamlit
-opencv-python-headless==4.8.1.78
+matplotlib
+opencv-python-headless
 streamlit-drawable-canvas>=0.9.0
 streamlit-option-menu
-pandas
-scipy
 scikit-learn
+google-cloud-firestore
 firebase-admin
-requests
-uuid
-python-dotenv
-torch
-torchvision
-mediapipe
-dlib
-face-recognition     
-ultralytics  # for YOLO
-tensorflow
+google-cloud-storage
+scipy
+torch --index-url https://download.pytorch.org/whl/cpu
+tqdm
