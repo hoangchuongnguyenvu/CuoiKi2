@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.log
+.DS_Store
+hchuong-firebase-adminsdk-1m82k-a70c60ad91.json
+.streamlit/secrets.toml

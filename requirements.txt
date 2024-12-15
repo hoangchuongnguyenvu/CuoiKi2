@@ -1,0 +1,20 @@
+numpy
+Pillow
+streamlit
+opencv-python-headless==4.8.1.78
+streamlit-drawable-canvas>=0.9.0
+streamlit-option-menu
+pandas
+scipy
+scikit-learn
+firebase-admin
+requests
+uuid
+python-dotenv
+torch
+torchvision
+mediapipe
+dlib
+face-recognition     
+ultralytics  # for YOLO
+tensorflow
