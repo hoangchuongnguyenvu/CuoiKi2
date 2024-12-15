@@ -15,7 +15,8 @@ from pages import (
     MOT_SORT,
     SOT_KCF,
     Senmatic_Keypoints,
-    Watershed_Segmentation
+    Watershed_Segmentation,
+    Instance_Search
 )
 
 st.set_page_config(
@@ -37,7 +38,8 @@ with st.sidebar:
             "Multiple Object Tracking",
             "Single Object Tracking",
             "Semantic Keypoints",
-            "Watershed Segmentation"
+            "Watershed Segmentation",
+            "Instance Search"
         ],
         icons=[
             "person-bounding-box",
@@ -47,7 +49,8 @@ with st.sidebar:
             "people",
             "crosshair",
             "key",
-            "water"
+            "water",
+            "search"
         ],
         menu_icon="cast",
         default_index=0,
@@ -73,3 +76,5 @@ elif selected == "Semantic Keypoints":
     Senmatic_Keypoints.main()
 elif selected == "Watershed Segmentation":
     Watershed_Segmentation.main()
+elif selected == "Instance Search":
+    Instance_Search.main()
