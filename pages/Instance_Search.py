@@ -87,7 +87,7 @@ class BOVWSearcher:
         return results[:top_k]
 
 def main():
-    st.title("Image Search")
+    st.title(page_title="Image Search Demo")
     
     # Phần 1: Giới thiệu Dataset
     st.title("Demo Hệ thống Tìm kiếm Ảnh")
@@ -117,8 +117,8 @@ def main():
             with col:
                 try:
                     st.image(sample_images[image_index], 
-                            caption=f"Ảnh mẫu {image_index + 1}"
-                            )
+                            caption=f"Ảnh mẫu {image_index + 1}",
+                            use_container_width=True)
                 except Exception as e:
                     st.error(f"Không thể load ảnh {sample_images[image_index]}")
     
@@ -133,8 +133,8 @@ def main():
     - Mỗi descriptor là vector 128 chiều
     """)
     st.image("SIFT-feature-extraction-algorithm-process.png", 
-             caption="SIFT keypoints và descriptors"
-             )
+             caption="SIFT keypoints và descriptors", 
+             use_container_width=True)
     
     # Visual Vocabulary Construction
     st.subheader("2.2. Xây dựng Vocabulary")
@@ -144,54 +144,63 @@ def main():
     - Số lượng clusters = 1000 (có thể điều chỉnh)
     """)
     st.image("The-features-extraction-system-using-bag-of-visual-words-BoVW.png", 
-             caption="K-means clustering visual words"
-                )
+             caption="K-means clustering visual words", 
+             use_container_width=True)
     
-    st.subheader("2.3. Các kỹ thuật trong BOVW Histogram")  
+    st.subheader("2.3. Quy trình chi tiết BOVW")  
     st.markdown("""
     ### Quy trình chi tiết thuật toán Bag of Visual Words (BOVW):
 
-    #### 1. Trích xuất đặc trưng
-    - Phát hiện các điểm đặc trưng (keypoints) trên ảnh sử dụng SIFT/SURF
-    - Mỗi keypoint được mô tả bằng vector đặc trưng 128 chiều (SIFT descriptor)
-    - Descriptor mô tả gradient theo 8 hướng trong 16 vùng 4x4 xung quanh keypoint
-    - Chuẩn hóa descriptor để bất biến với độ sáng và độ tương phản
+    #### 1. Trích xuất đặc trưng sử dụng SIFT
+    - SIFT (Scale-Invariant Feature Transform) phát hiện và mô tả các điểm đặc trưng
+    - Mỗi keypoint được biểu diễn bởi vector 128 chiều
+    - SIFT có tính bất biến với:
+        + Phép xoay (Rotation invariant)
+        + Tỉ lệ (Scale invariant)
+        + Độ sáng (Illumination invariant)
+        + Góc nhìn (Viewpoint invariant)
 
-    #### 2. Xây dựng từ điển thị giác (Visual Vocabulary)
-    - Thu thập tất cả descriptor từ tập ảnh huấn luyện (thường là hàng triệu descriptor)
-    - Sử dụng K-means clustering để phân cụm các descriptor thành K cụm (ví dụ K=1000)
-    - Mỗi tâm cụm trở thành một "visual word" trong từ điển
-    - Lưu từ điển để tái sử dụng cho các ảnh mới
+    #### 2. Phân cụm K-means để tạo từ điển thị giác
+    - Thu thập tất cả SIFT descriptor từ tập ảnh huấn luyện
+    - Áp dụng thuật toán K-means để phân cụm các descriptor
+    - Số lượng cụm K quyết định kích thước từ điển (codebook)
+    - Tâm của mỗi cụm trở thành một visual word
+    - Các tham số quan trọng:
+        + K = 1000 (số lượng visual words)
+        + batch_size = 1000 (cho MiniBatchKMeans)
+        + random_state = 42 (đảm bảo reproducible)
 
-    #### 3. Mã hóa đặc trưng (Feature Encoding)
-    - Hard Assignment: Gán mỗi descriptor cho visual word gần nhất
-    - Soft Assignment: Gán descriptor cho nhiều visual word với trọng số khác nhau
-    - Tạo histogram chuẩn hóa L1 hoặc L2 thể hiện tần suất của visual words
+    #### 3. Biểu diễn BOVW (Bag of Visual Words)
+    - Với mỗi ảnh:
+        + Trích xuất SIFT descriptor
+        + Gán mỗi descriptor vào visual word gần nhất
+        + Tạo histogram thể hiện tần suất của visual words
+    - Chuẩn hóa histogram để có vector đặc trưng cuối cùng
+    - Áp dụng kỹ thuật soft assignment:
+        ```python
+        sigma = mean_distance / 2
+        weights = exp(-distances / (2 * sigma^2))
+        weights = weights / sum(weights)
+        ```
+    - Tính trọng số IDF (Inverse Document Frequency):
+        + IDF(i) = log(N/df_i)
+        + N: tổng số ảnh
+        + df_i: số ảnh chứa visual word thứ i
 
-    #### 4. Áp dụng trọng số TF-IDF
-    - Term Frequency (TF): Tần suất xuất hiện của visual word trong ảnh
-    - Inverse Document Frequency (IDF): log(N/n_i)
-        + N: Tổng số ảnh trong dataset
-        + n_i: Số ảnh chứa visual word thứ i
-    - Trọng số cuối = TF × IDF
-    - IDF giúp giảm tầm quan trọng của visual words phổ biến, tăng tầm quan trọng của visual words đặc trưng
+    #### 4. Tìm kiếm và so khớp ảnh
+    - Vector đặc trưng cuối cùng được sử dụng để:
+        + So sánh độ tương đồng giữa các ảnh (cosine similarity)
+        + Tìm kiếm ảnh tương tự (nearest neighbors)
+        + Phân loại hoặc gom nhóm ảnh
+    - Độ phức tạp:
+        + Xây dựng từ điển: O(NKD)
+        + Trích xuất đặc trưng cho 1 ảnh: O(KD)
+        + Tìm kiếm: O(M) với M là số ảnh trong database
 
-    #### 5. Tối ưu hóa biểu diễn
-    - Chuẩn hóa L2 cho vector đặc trưng cuối cùng
-    - Áp dụng PCA để giảm chiều dữ liệu
-    - Sử dụng Spatial Pyramid Matching để bảo toàn thông tin không gian
-    - Lượng tử hóa vector để giảm dung lượng lưu trữ
-
-    #### 6. Tìm kiếm và so khớp
-    - Với ảnh truy vấn, thực hiện các bước 1-5 để có vector đặc trưng
-    - Tính độ tương đồng bằng cosine similarity hoặc khoảng cách Euclidean
-    - Sử dụng cấu trúc dữ liệu hiệu quả (như k-d tree) để tăng tốc tìm kiếm
-    - Xếp hạng và trả về top-K ảnh tương đồng nhất
-
-    > BOVW kết hợp với TF-IDF và các kỹ thuật tối ưu giúp biểu diễn ảnh hiệu quả,
-    > cho phép tìm kiếm chính xác và nhanh chóng trong tập dữ liệu lớn.
+    > Quy trình này kết hợp ưu điểm của SIFT trong việc trích xuất đặc trưng bất biến,
+    > và K-means trong việc tạo từ điển thị giác nhỏ gọn, cho phép biểu diễn ảnh hiệu quả.
     """)
-    
+
     # Thêm một ví dụ tương tác
     
     # Phần 3: Instance Search
@@ -221,7 +230,7 @@ def main():
         with col1:
             st.subheader("Ảnh Query")
             query_image = Image.open(uploaded_file)
-            st.image(query_image, use_column_width=True)
+            st.image(query_image, use_container_width=True)
         
         # Xử lý ảnh và tìm kiếm
         try:
@@ -245,7 +254,7 @@ def main():
                         with cols[col_idx]:
                             st.image(result['image'],
                                    caption=f"Score: {result['score']:.3f}\n{result['image_name']}",
-                                   use_column_width=True)
+                                   use_container_width=True)
                 else:
                     st.warning("Không tìm thấy ảnh tương tự!")
                     
