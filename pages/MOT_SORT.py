@@ -67,60 +67,63 @@ def main():
         st.image('UIUX/SORT/image.png', caption='Sơ đồ tổng quan thuật toán SORT')
     
     st.markdown("""
-    ### Thuật toán SORT hoạt động qua các bước chính:
+    **Thuật toán SORT hoạt động qua các bước chính:**
 
-    #### 1. Object Detection
+    **1. Object Detection**
+
     - Sử dụng một detector bên ngoài (như YOLO, SSD, Faster R-CNN) để phát hiện đối tượng trong mỗi frame
     - Mỗi detection bao gồm bounding box và điểm số tin cậy
     - Detector có thể được tùy chọn dựa trên yêu cầu về tốc độ và độ chính xác
     - Output của detector sẽ là danh sách các bounding box với format [x1, y1, x2, y2, score]
 
-    #### 2. State Estimation với Kalman Filter
-    - Dự đoán vị trí của đối tượng trong frame tiếp theo
-    - Sử dụng mô hình chuyển động tuyến tính
-    - State vector bao gồm 7 thành phần: [u, v, s, r, u̇, v̇, ṡ]
-        - u, v: tọa độ tâm bbox
-        - s: diện tích
-        - r: tỷ lệ khung hình
-        - u̇, v̇, ṡ: vận tốc tương ứng
-    - Kalman Filter thực hiện hai bước:
-        - Predict: Dự đoán state mới dựa trên mô hình chuyển động
-        - Update: Cập nhật state dựa trên measurement mới
-
-    #### 3. Data Association với Hungarian Algorithm
-    - Liên kết các detection mới với các track hiện có
-    - Sử dụng IoU (Intersection over Union) làm metric đo độ tương đồng
-    - Quy trình association:
-        1. Tính ma trận IoU giữa tất cả các cặp detection-track
-        2. Áp dụng Hungarian Algorithm để tìm assignment tối ưu
-        3. Lọc bỏ các assignment có IoU thấp hơn ngưỡng
-    - Kết quả cho ra ba tập:
-        - Matched tracks: Các cặp detection-track được ghép
-        - Unmatched detections: Detections không được ghép với track nào
-        - Unmatched tracks: Tracks không được ghép với detection nào
-
-    #### 4. Track Management
-    - Quản lý vòng đời của các track trong hệ thống
-    - Các hoạt động chính:
-        1. Khởi tạo track mới:
-            - Tạo từ unmatched detections
-            - Khởi tạo Kalman Filter với state vector ban đầu
-        2. Cập nhật track hiện có:
-            - Update Kalman Filter với matched detections
-            - Cập nhật số frame liên tiếp track được/mất detection
-        3. Xóa track:
-            - Xóa track khi không được cập nhật trong max_age frames
-            - Hoặc track có chất lượng thấp (ít hits)
-                
-    Mỗi bước trong thuật toán đều được thiết kế để đơn giản và hiệu quả, tập trung vào việc xử lý realtime. 
-    Việc sử dụng Kalman Filter cho prediction và Hungarian Algorithm cho data association tạo nên một giải pháp 
-    tracking đơn giản nhưng mạnh mẽ.
-    """)
-
+    **2. State Estimation với Kalman Filter**
+    - Trong bài báo SORT (Simple Online and Realtime Tracking), bộ lọc Kalman được sử dụng để dự đoán vị trí của đối tượng trong quá trình theo dõi đối tượng. 
+    Bộ lọc Kalman sử dụng trạng thái của mục tiêu tại thời điểm trước đó để dự đoán trạng thái hiện tại của mục tiêu.
+""")
     col1, col2, col3 = st.columns([1,10,1])
     with col2:
-        st.image('5.png', caption='Minh họa bằng frame thực tế')
+        st.image('image.png', caption='State Estimation') 
 
+
+    st.markdown("""
+    - Đầu tiên, chiếc xe được phát hiện ở khung hình đầu tiên, nơi vị trí và tốc độ của nó được xác định là (x, v). Nếu vậy, vị trí của xe ở khung hình tiếp theo có thể dễ dàng dự đoán là $\hat{x} = x + v$. Tuy nhiên, theo kết quả của máy dò, ở khung hình thứ hai, vị trí đo được có thể là $y$, và giá trị này có thể khác nhau. Sự khác biệt này có khả năng cao là do sự không chắc chắn trong đo lường và chuyển động. Để giải quyết các mâu thuẫn này, bộ lọc Kalman sử dụng phân bố xác suất Gaussian.
+
+    - Khi sự khác biệt giữa hai phân bố Gaussian, với mỗi giá trị trung bình là $\hat{x}$ và $y$ càng nhỏ, thì độ tin cậy của phép đo và dự đoán càng cao. Ngược lại, sự khác biệt càng lớn, thì độ tin cậy càng thấp. Trong quá trình này, khoảng cách Mahalanobis được sử dụng. Khoảng cách Mahalanobis là giá trị cho biết khoảng cách so với giá trị trung bình bao nhiêu lần độ lệch chuẩn.
+
+    - Khi sử dụng bộ lọc Kalman trong Theo Dõi Đa Đối Tượng (MOT), các tham số $x, y, w, h, \dot{x}, \dot{y}, \dot{w}, \dot{h}$ được sử dụng. Vì chúng ta biết hộp giới hạn thu được từ máy dò nên chúng ta cũng có thể biết tọa độ, chiều rộng và chiều cao của hộp cũng như vận tốc của từng giá trị. Vận tốc có thể được xác định bằng cách so sánh khung hình trước đó và khung hình hiện tại.
+""")
+    st.markdown("""**Minh họa quá trình**""")
+    col1 , col2 = st.columns(2)
+    with col1 :
+        st.image("shin1.png", caption="Current Frame")
+    with col2 : 
+        st.image("shin2.png", caption="Next Frame")
+
+    st.markdown("""
+    - Nếu chúng ta xác định một đối tượng là nhân vật trong hình và định nghĩa trạng thái của nó, trung tâm của bounding box là (400, 180) và (60, 60) là giá trị chiều rộng và chiều cao của bounding box. Tiếp theo, (10, 5, 0, 0) là tốc độ theo trục x và y cùng với tốc độ thay đổi w và h của bounding box. 
+    Vị trí tiếp theo của Shin-chan có thể được dự đoán là (410, 185).
+                
+    - Tuy nhiên, trong thực tế, đối tượng không di chuyển với tốc độ cố định như vậy, do đó rất khó để tìm ra chính xác vị trí của nó trong khung hình tiếp theo. Đó là lý do tại sao chúng ta sử dụng phân bố xác suất (phân bố Gaussian) để dự đoán vị trí tiếp theo của đối tượng.
+    
+    - Nếu bounding box màu đỏ là dự đoán của bộ lọc Kalman, và các bounding box màu xanh và màu xanh lá là giá trị thực tế được đo lường, chúng ta sẽ tính toán chi phí (cost) giữa bounding box màu đỏ và mỗi bounding box màu xanh và xanh lá dựa trên khoảng cách Mahalanobis. Sau đó, chúng ta sẽ cập nhật bounding box màu xanh theo hướng mà chi phí là nhỏ nhất.
+""")
+
+    st.markdown("""
+    **3. Data Association với Hungarian Algorithm**
+                
+    Phương pháp liên kết dữ liệu (Data Association) thường sử dụng thuật toán Hungarian để tối ưu hóa. Giá trị dự đoán thu được từ bộ lọc Kalman sẽ được áp dụng để liên kết với các đối tượng mới được phát hiện trong các khung hình tiếp theo. Sau đó, giữa các phát hiện của các mục tiêu hiện có và các hộp giới hạn dự đoán, giá trị IOU sẽ được sử dụng để tính toán ma trận chi phí. Cuối cùng, thuật toán Hungarian được sử dụng để tối ưu hóa quá trình này.
+""")
+    col1, col2, col3 = st.columns([1,10,1])
+    with col2 :
+        st.image("da.png",caption="Data Association")
+
+    st.markdown("""*Chú thích*""")
+    st.markdown("""
+- 
+    - (a) Kết quả bộ lọc Kalman ở thời điểm trước
+    - (b) Bounding Box hiện tại (màu xanh) - bounding box dự đoán (màu đỏ)
+    - (c) Tính toán giá trị IOU giữa (a) và (b) và gán ID bằng thuật toán Hungarian 
+""")
 
     # 1.3. Ví dụ minh họa
     st.subheader("1.3. Ví dụ minh họa")
