@@ -191,8 +191,7 @@ def main():
             with col:
                 try:
                     st.image(img_path, 
-                            caption=f"Ảnh kết quả {idx + 1}", 
-                            use_column_width=True)
+                            caption=f"Ảnh kết quả {idx + 1}")
                 except Exception as e:
                     st.error(f"Lỗi khi hiển thị ảnh: {str(e)}")
 
