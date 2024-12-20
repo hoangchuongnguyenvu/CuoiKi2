@@ -117,8 +117,8 @@ def main():
             with col:
                 try:
                     st.image(sample_images[image_index], 
-                            caption=f"Ảnh mẫu {image_index + 1}",
-                            use_column_width=True)
+                            caption=f"Ảnh mẫu {image_index + 1}"
+                            )
                 except Exception as e:
                     st.error(f"Không thể load ảnh {sample_images[image_index]}")
     
@@ -133,8 +133,8 @@ def main():
     - Mỗi descriptor là vector 128 chiều
     """)
     st.image("SIFT-feature-extraction-algorithm-process.png", 
-             caption="SIFT keypoints và descriptors", 
-             use_column_width=True)
+             caption="SIFT keypoints và descriptors"
+             )
     
     # Visual Vocabulary Construction
     st.subheader("2.2. Xây dựng Vocabulary")
@@ -144,8 +144,8 @@ def main():
     - Số lượng clusters = 1000 (có thể điều chỉnh)
     """)
     st.image("The-features-extraction-system-using-bag-of-visual-words-BoVW.png", 
-             caption="K-means clustering visual words", 
-             use_column_width=True)
+             caption="K-means clustering visual words"
+                )
     
     st.subheader("2.3. Các kỹ thuật trong BOVW Histogram")  
     st.markdown("""
