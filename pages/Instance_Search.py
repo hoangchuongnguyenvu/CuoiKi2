@@ -87,7 +87,7 @@ class BOVWSearcher:
         return results[:top_k]
 
 def main():
-    st.set_page_config(page_title="Image Search Demo", layout="wide")
+    st.title("Image Search")
     
     # Phần 1: Giới thiệu Dataset
     st.title("Demo Hệ thống Tìm kiếm Ảnh")
