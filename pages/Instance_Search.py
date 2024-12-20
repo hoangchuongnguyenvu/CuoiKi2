@@ -166,8 +166,8 @@ def main():
     - Số lượng cụm K quyết định kích thước từ điển (codebook)
     - Tâm của mỗi cụm trở thành một visual word
     - Các tham số quan trọng:
-        + K = 50 (số lượng visual words)
-        + batch_size = 50 (cho MiniBatchKMeans)
+        + K = 1000 (số lượng visual words)
+        + batch_size = 1000 (cho MiniBatchKMeans)
         + random_state = 42 (đảm bảo reproducible)
 
     #### 3. Biểu diễn BOVW (Bag of Visual Words)
@@ -177,16 +177,26 @@ def main():
         + Tạo histogram thể hiện tần suất của visual words
     - Chuẩn hóa histogram để có vector đặc trưng cuối cùng
     - Áp dụng kỹ thuật soft assignment:
-        ```python
-        sigma = mean_distance / 2
-        weights = exp(-distances / (2 * sigma^2))
-        weights = weights / sum(weights)
+        + Với $\sigma$ là độ lệch chuẩn của khoảng cách:
+        ```math
+        \sigma = \frac{\text{mean\_distance}}{2}
+        ```
+        + Tính trọng số cho mỗi visual word:
+        ```math
+        \text{weights} = \exp\left(-\frac{\text{distances}}{2\sigma^2}\right)
+        ```
+        + Chuẩn hóa trọng số:
+        ```math
+        \text{weights} = \frac{\text{weights}}{\sum \text{weights}}
         ```
     - Tính trọng số IDF (Inverse Document Frequency):
-        + IDF(i) = log(N/df_i)
-        + N: tổng số ảnh
-        + df_i: số ảnh chứa visual word thứ i
-
+        + Công thức tính IDF cho visual word thứ i:
+        ```math
+        \text{IDF}(i) = \log\left(\frac{N}{\text{df}_i}\right)
+        ```
+        + Trong đó:
+            * $N$: tổng số ảnh trong dataset
+            * $\text{df}_i$: số ảnh chứa visual word thứ i
     #### 4. Tìm kiếm và so khớp ảnh
     - Vector đặc trưng cuối cùng được sử dụng để:
         + So sánh độ tương đồng giữa các ảnh (cosine similarity)
