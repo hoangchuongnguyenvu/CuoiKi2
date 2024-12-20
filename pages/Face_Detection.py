@@ -37,8 +37,7 @@ def main():
                 image = image.resize((DISPLAY_SIZE, DISPLAY_SIZE), Image.NEAREST)
                 st.image(image, 
                         caption=f"Face {i+1}",
-                        width=DISPLAY_SIZE,
-                        use_column_width=False)
+                        width=DISPLAY_SIZE)
             except FileNotFoundError:
                 st.error(f"Không tìm thấy ảnh face/{i+1}.png")
 
@@ -53,8 +52,7 @@ def main():
                 image = image.resize((DISPLAY_SIZE, DISPLAY_SIZE), Image.NEAREST)
                 st.image(image, 
                         caption=f"Non-face {i+1}",
-                        width=DISPLAY_SIZE,
-                        use_column_width=False)
+                        width=DISPLAY_SIZE)
             except FileNotFoundError:
                 st.error(f"Không tìm thấy ảnh nonface/{i+1}.png")
 
@@ -164,8 +162,7 @@ def main():
     col1, col2, col3 = st.columns([1,4,1])  # Tỷ lệ 1:2:1
     with col2:  # Cột giữa
         st.image("UIUX/FaceDetection/metric_process/OIP.jpg", 
-                caption="Minh họa cách tính IoU giữa Predicted Box và Ground Truth Box",
-                use_column_width=True)
+                caption="Minh họa cách tính IoU giữa Predicted Box và Ground Truth Box")
 
     st.header("5. Kết quả Huấn luyện và Test")
 
@@ -189,49 +186,49 @@ def main():
     row1_col1, row1_col2, row1_col3, row1_col4, row1_col5, row1_col6, row1_col7, row1_col8, row1_col9, row1_col10 = st.columns(10)
 
     with row1_col1:
-        st.image("UIUX/FaceDetection/tests/images/000020.jpg", caption="Ảnh test 1", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000020.jpg", caption="Ảnh test 1")
     with row1_col2:
-        st.image("UIUX/FaceDetection/tests/images/000044.jpg", caption="Ảnh test 2", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000044.jpg", caption="Ảnh test 2")
     with row1_col3:
-        st.image("UIUX/FaceDetection/tests/images/000136.jpg", caption="Ảnh test 3", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000136.jpg", caption="Ảnh test 3")
     with row1_col4:
-        st.image("UIUX/FaceDetection/tests/images/000191.jpg", caption="Ảnh test 4", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000191.jpg", caption="Ảnh test 4")
     with row1_col5:
-        st.image("UIUX/FaceDetection/tests/images/000236.jpg", caption="Ảnh test 5", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000236.jpg", caption="Ảnh test 5")
     with row1_col6:
-        st.image("UIUX/FaceDetection/tests/images/000405.jpg", caption="Ảnh test 6", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000405.jpg", caption="Ảnh test 6")
     with row1_col7:
-        st.image("UIUX/FaceDetection/tests/images/000495.jpg", caption="Ảnh test 7", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000495.jpg", caption="Ảnh test 7")
     with row1_col8:
-        st.image("UIUX/FaceDetection/tests/images/000590.jpg", caption="Ảnh test 8", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000590.jpg", caption="Ảnh test 8")
     with row1_col9:
-        st.image("UIUX/FaceDetection/tests/images/000698.jpg", caption="Ảnh test 9", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000698.jpg", caption="Ảnh test 9")
     with row1_col10:
-        st.image("UIUX/FaceDetection/tests/images/000760.jpg", caption="Ảnh test 10", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/images/000760.jpg", caption="Ảnh test 10")
 
     # Hàng 2: Kết quả sau khi áp dụng mô hình
     row2_col1, row2_col2, row2_col3, row2_col4, row2_col5, row2_col6, row2_col7, row2_col8, row2_col9, row2_col10 = st.columns(10)
 
     with row2_col1:
-        st.image("UIUX/FaceDetection/tests/result/detected_000020.jpg", caption="Kết quả 1", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000020.jpg", caption="Kết quả 1")
     with row2_col2:
-        st.image("UIUX/FaceDetection/tests/result/detected_000044.jpg", caption="Kết quả 2", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000044.jpg", caption="Kết quả 2")
     with row2_col3:
-        st.image("UIUX/FaceDetection/tests/result/detected_000136.jpg", caption="Kết quả 3", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000136.jpg", caption="Kết quả 3")
     with row2_col4:
-        st.image("UIUX/FaceDetection/tests/result/detected_000191.jpg", caption="Kết quả 4", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000191.jpg", caption="Kết quả 4")
     with row2_col5:
-        st.image("UIUX/FaceDetection/tests/result/detected_000236.jpg", caption="Kết quả 5", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000236.jpg", caption="Kết quả 5")
     with row2_col6:
-        st.image("UIUX/FaceDetection/tests/result/detected_000405.jpg", caption="Kết quả 6", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000405.jpg", caption="Kết quả 6")
     with row2_col7:
-        st.image("UIUX/FaceDetection/tests/result/detected_000495.jpg", caption="Kết quả 7", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000495.jpg", caption="Kết quả 7")
     with row2_col8:
-        st.image("UIUX/FaceDetection/tests/result/detected_000590.jpg", caption="Kết quả 8", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000590.jpg", caption="Kết quả 8")
     with row2_col9:
-        st.image("UIUX/FaceDetection/tests/result/detected_000698.jpg", caption="Kết quả 9", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000698.jpg", caption="Kết quả 9")
     with row2_col10:
-        st.image("UIUX/FaceDetection/tests/result/detected_000760.jpg", caption="Kết quả 10", use_column_width=True)
+        st.image("UIUX/FaceDetection/tests/result/detected_000760.jpg", caption="Kết quả 10")
 
 
     st.header("6. Ứng dụng Thử nghiệm")
