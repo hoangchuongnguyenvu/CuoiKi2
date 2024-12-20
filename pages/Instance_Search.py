@@ -178,21 +178,21 @@ def main():
     - Chuẩn hóa histogram để có vector đặc trưng cuối cùng
     - Áp dụng kỹ thuật soft assignment:
         + Với $\sigma$ là độ lệch chuẩn của khoảng cách:
-        ```math
+        ```latex
         \sigma = \frac{\text{mean\_distance}}{2}
         ```
         + Tính trọng số cho mỗi visual word:
-        ```math
-        \text{weights} = \exp\left(-\frac{\text{distances}}{2\sigma^2}\right)
+        ```latex
+        \text{weights} = \exp{\left(-\frac{\text{distances}}{2\sigma^2}\right)}
         ```
         + Chuẩn hóa trọng số:
-        ```math
-        \text{weights} = \frac{\text{weights}}{\sum \text{weights}}
+        ```latex
+        \text{weights} = \frac{\text{weights}}{\sum{\text{weights}}}
         ```
     - Tính trọng số IDF (Inverse Document Frequency):
         + Công thức tính IDF cho visual word thứ i:
-        ```math
-        \text{IDF}(i) = \log\left(\frac{N}{\text{df}_i}\right)
+        ```latex
+        \text{IDF}(i) = \log{\left(\frac{N}{\text{df}_i}\right)}
         ```
         + Trong đó:
             * $N$: tổng số ảnh trong dataset
