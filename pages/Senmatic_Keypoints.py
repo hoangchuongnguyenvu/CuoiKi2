@@ -91,7 +91,7 @@ def main():
     for i, gt_name in enumerate(gt_images[:5]):
         with row1_col2[i]:
             st.markdown('<div class="image-container">', unsafe_allow_html=True)
-            st.image(gt_name, caption=f"Ground Truth {i+1}", use_column_width=True)
+            st.image(gt_name, caption=f"Ground Truth {i+1}")
             st.markdown('</div>', unsafe_allow_html=True)
 
     # Hàng 2: 3 ảnh còn lại, căn giữa
@@ -100,7 +100,7 @@ def main():
     for i, gt_name in enumerate(gt_images[5:]):
         with row2_col2[i+1]:
             st.markdown('<div class="image-container">', unsafe_allow_html=True)
-            st.image(gt_name, caption=f"Ground Truth {i+5}", use_column_width=True)
+            st.image(gt_name, caption=f"Ground Truth {i+5}")
             st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -135,7 +135,7 @@ def main():
     # Vị trí để thêm hình ảnh SIFT
     col1, col2, col3 = st.columns([1,10,1])
     with col2:
-        st.image("application/Senmatic_Keypoints/ORB_process/SIFT.png", caption="SIFT Keypoints Detection", use_column_width=True)
+        st.image("application/Senmatic_Keypoints/ORB_process/SIFT.png", caption="SIFT Keypoints Detection")
 
     # ORB
     st.subheader("2.2 Oriented FAST and Rotated BRIEF (ORB)")
@@ -163,7 +163,7 @@ def main():
     # Vị trí để thêm hình ảnh ORB
     col1, col2, col3 = st.columns([1,7,1])
     with col2:
-        st.image("ORBhehe.jpg", caption="ORB Feature Detection", use_column_width=True)
+        st.image("ORBhehe.jpg", caption="ORB Feature Detection")
 
     # Euclidean Distance
     st.subheader("2.3 Euclidean Distance")
@@ -196,7 +196,7 @@ def main():
     # Vị trí để thêm hình ảnh Euclidean Distance
     col1, col2, col3 = st.columns([1,10,1])
     with col2:
-        st.image("application/Senmatic_Keypoints/results/euclidean_visualization.png", caption="Euclidean Distance Evaluation", use_column_width=True)
+        st.image("application/Senmatic_Keypoints/results/euclidean_visualization.png", caption="Euclidean Distance Evaluation")
 
     # 2.2 Kết quả thực nghiệm
     st.header("3. Kết quả thực nghiệm")
@@ -208,7 +208,7 @@ def main():
     for i, image_file in enumerate(orb_files[:20]):  # Giới hạn 16 ảnh
         with cols_orb[i % 4]:
             image_path = os.path.join("application/Senmatic_Keypoints/ORB", image_file)
-            st.image(image_path, caption=f"ORB {i+1}", use_column_width=True)
+            st.image(image_path, caption=f"ORB {i+1}")
 
     # Kết quả SIFT
     st.markdown("#### Kết quả SIFT")
@@ -217,7 +217,7 @@ def main():
     for i, image_file in enumerate(sift_files[:20]):  # Giới hạn 16 ảnh
         with cols_sift[i % 4]:
             image_path = os.path.join("application/Senmatic_Keypoints/SIFT", image_file)
-            st.image(image_path, caption=f"SIFT {i+1}", use_column_width=True)
+            st.image(image_path, caption=f"SIFT {i+1}")
 
     # Phần 3: Phương pháp đánh giá
     st.header("4. Phương pháp đánh giá")
@@ -238,7 +238,7 @@ def main():
     # Thêm hình minh họa ở cuối
     col1, col2, col3 = st.columns([1,10,1])
     with col2:
-        st.image("application/Senmatic_Keypoints/ORB_process/R.png", caption="Minh họa Precision và Recall", use_column_width=True)
+        st.image("application/Senmatic_Keypoints/ORB_process/R.png", caption="Minh họa Precision và Recall")
 
     # Phần 4: Kết quả đánh giá
     st.header("5. Kết quả đánh giá")
@@ -261,18 +261,18 @@ def main():
     st.markdown("**Dạng hình học nổi bật của SIFT**")
     col1 , col2 = st.columns(2)
     with col1:
-        st.image("kaggle_working_20241215_112046/draw_lines_comparison.png", caption="Lines", use_column_width=True)
+        st.image("kaggle_working_20241215_112046/draw_lines_comparison.png", caption="Lines")
     with col2 :
-        st.image("kaggle_working_20241215_112046/draw_stripes_comparison.png",caption="Stripes",use_column_width=True)
+        st.image("kaggle_working_20241215_112046/draw_stripes_comparison.png",caption="Stripes")
 
     st.markdown("**Dạng hình học nổi bật của ORB**")
     col1 , col2 , col3 = st.columns(3)
     with col1:
-        st.image("kaggle_working_20241215_112046/draw_checkerboard_comparison.png", caption="Checkerboard", use_column_width=True)
+        st.image("kaggle_working_20241215_112046/draw_checkerboard_comparison.png", caption="Checkerboard")
     with col2 :
-        st.image("kaggle_working_20241215_112046/draw_polygon_comparison.png",caption="Polygon",use_column_width=True) 
+        st.image("kaggle_working_20241215_112046/draw_polygon_comparison.png",caption="Polygon") 
     with col3 : 
-        st.image("kaggle_working_20241215_112046/draw_star_comparison.png",caption="Star",use_column_width=True) 
+        st.image("kaggle_working_20241215_112046/draw_star_comparison.png",caption="Star") 
     
     st.markdown("""
 **Giải thích nhận xét**
@@ -287,7 +287,7 @@ xét mới về SIFT và ORB như sau :
 """)
     col1,col2,col3 = st.columns([1,7,1])
     with col2 :
-        st.image("feature_detection_analysis.png", caption="Minh họa",use_column_width=True)    
+        st.image("feature_detection_analysis.png", caption="Minh họa")    
 
     st.markdown("""
 - Bạn có thể nhìn ở hình ảnh so sánh ở trên của hai phương pháp thì có thể thấy được rằng :
@@ -318,11 +318,11 @@ xét mới về SIFT và ORB như sau :
     
     col1,col2,col3 = st.columns([1,7,1])
     with col2 :
-        st.image("feature_detection_analysis (2).png", caption="Minh họa",use_column_width=True)
+        st.image("feature_detection_analysis (2).png", caption="Minh họa")
 
     col1,col2,col3 = st.columns([1,7,1])
     with col2 :
-        st.image("groundtruth_comparison (2).png", caption="Minh họa",use_column_width=True)
+        st.image("groundtruth_comparison (2).png", caption="Minh họa")
         
     st.markdown("""
 - Thông qua hai hình ảnh so sánh ở trên, ta có thể đưa ra lí giải cho những nhận xét ở trên như sau :
@@ -333,14 +333,14 @@ xét mới về SIFT và ORB như sau :
 """)
     col1,col2,col3 = st.columns([1,5,1])
     with col2 :
-        st.image("Figure2-aConstruction-of-the-Difference-of-GaussianDoG-scale-space-b-similarity.png", caption="Cực trị trong DoG",use_column_width=True)
+        st.image("Figure2-aConstruction-of-the-Difference-of-GaussianDoG-scale-space-b-similarity.png", caption="Cực trị trong DoG")
 
     st.markdown("""
 - Còn đối với ORB thì như chúng ta đã biết thì phương pháp rất mạnh trong việc phát hiện các góc thông qua nguyên lí hoạt động của nó.
 """)
     col1,col2,col3 = st.columns([1,5,1])
     with col2 :
-        st.image("Example-of-the-FAST-features-from-accelerated-segment-test-feature-detector.png", caption="Nguyên lí hoạt động của FAST",use_column_width=True)
+        st.image("Example-of-the-FAST-features-from-accelerated-segment-test-feature-detector.png", caption="Nguyên lí hoạt động của FAST")
 
     st.markdown("""
 - 
