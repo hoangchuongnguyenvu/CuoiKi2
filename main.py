@@ -31,26 +31,22 @@ with st.sidebar:
     selected = option_menu(
         menu_title=None,
         options=[
-            "Face Detection",
-            "Face Verification",
-            "Features Matching",
-            "GrabCut Segmentation",
-            "Multiple Object Tracking",
-            "Single Object Tracking",
-            "Semantic Keypoints",
+            "GrabCut",
             "Watershed Segmentation",
-            "Instance Search"
+            "Face Detection",
+            "Senmatic Keypoints",
+            "Features Matching",
+            "SOT KCF",
+            "MOT SORT"
         ],
         icons=[
-            "person-bounding-box",
-            "person-check",
-            "intersect",
             "scissors",
-            "people",
-            "crosshair",
-            "key",
             "water",
-            "search"
+            "person-bounding-box",
+            "key",
+            "intersect",
+            "crosshair",
+            "people"
         ],
         menu_icon="cast",
         default_index=0,
@@ -60,21 +56,19 @@ with st.sidebar:
 st.title("Computer Vision Applications")
 
 # Route to different pages based on selection
-if selected == "Face Detection":
-    Face_Detection.main()
-elif selected == "Face Verification":
-    Face_Verification.main()
-elif selected == "Features Matching":
-    Features_Matching.main()
-elif selected == "GrabCut Segmentation":
+if selected == "GrabCut":
     GrabCut.main()
-elif selected == "Multiple Object Tracking":
-    MOT_SORT.main()
-elif selected == "Single Object Tracking":
-    SOT_KCF.main()
-elif selected == "Semantic Keypoints":
-    Senmatic_Keypoints.main()
 elif selected == "Watershed Segmentation":
     Watershed_Segmentation.main()
-elif selected == "Instance Search":
+elif selected == "Face Detection":
+    Face_Detection.main()
+elif selected == "Senmatic Keypoints":
+    Senmatic_Keypoints.main()
+elif selected == "Features Matching":
+    Features_Matching.main()
+elif selectrd == "Instance Search" :
     Instance_Search.main()
+elif selected == "SOT KCF":
+    SOT_KCF.main()
+elif selected == "MOT SORT":
+    MOT_SORT.main()
