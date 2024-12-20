@@ -166,8 +166,8 @@ def main():
     - Số lượng cụm K quyết định kích thước từ điển (codebook)
     - Tâm của mỗi cụm trở thành một visual word
     - Các tham số quan trọng:
-        + K = 1000 (số lượng visual words)
-        + batch_size = 1000 (cho MiniBatchKMeans)
+        + K = 50 (số lượng visual words)
+        + batch_size = 50 (cho MiniBatchKMeans)
         + random_state = 42 (đảm bảo reproducible)
 
     #### 3. Biểu diễn BOVW (Bag of Visual Words)
