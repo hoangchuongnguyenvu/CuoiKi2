@@ -177,26 +177,29 @@ def main():
         + Tạo histogram thể hiện tần suất của visual words
     - Chuẩn hóa histogram để có vector đặc trưng cuối cùng
     - Áp dụng kỹ thuật soft assignment:
-        + Với $\sigma$ là độ lệch chuẩn của khoảng cách:
-        ```latex
-        \sigma = \frac{\text{mean\_distance}}{2}
-        ```
-        + Tính trọng số cho mỗi visual word:
-        ```latex
-        \text{weights} = \exp{\left(-\frac{\text{distances}}{2\sigma^2}\right)}
-        ```
-        + Chuẩn hóa trọng số:
-        ```latex
-        \text{weights} = \frac{\text{weights}}{\sum{\text{weights}}}
-        ```
+        + Bước 1: Tính độ lệch chuẩn (sigma)
+          - Lấy giá trị trung bình của khoảng cách và chia cho 2
+          - Giúp xác định mức độ ảnh hưởng của khoảng cách trong việc gán trọng số
+        
+        + Bước 2: Tính trọng số cho mỗi visual word
+          - Sử dụng hàm mũ (exp) với khoảng cách đã chuẩn hóa
+          - Visual words gần hơn sẽ có trọng số cao hơn
+          - Visual words xa hơn sẽ có trọng số thấp hơn
+        
+        + Bước 3: Chuẩn hóa trọng số
+          - Chia mỗi trọng số cho tổng tất cả trọng số
+          - Đảm bảo tổng các trọng số bằng 1
+          - Tạo ra phân phối xác suất cho các visual words
+
     - Tính trọng số IDF (Inverse Document Frequency):
-        + Công thức tính IDF cho visual word thứ i:
-        ```latex
-        \text{IDF}(i) = \log{\left(\frac{N}{\text{df}_i}\right)}
-        ```
-        + Trong đó:
-            * $N$: tổng số ảnh trong dataset
-            * $\text{df}_i$: số ảnh chứa visual word thứ i
+        + Mục đích: Đánh giá mức độ quan trọng của mỗi visual word
+        + Cách tính:
+          - Đếm số ảnh chứa mỗi visual word (df)
+          - Chia tổng số ảnh (N) cho số lần xuất hiện (df)
+          - Lấy logarit của kết quả để giảm độ chênh lệch
+        + Ý nghĩa:
+          - Visual words xuất hiện trong ít ảnh sẽ có IDF cao hơn (quan trọng hơn)
+          - Visual words xuất hiện trong nhiều ảnh sẽ có IDF thấp hơn (ít quan trọng hơn)
     #### 4. Tìm kiếm và so khớp ảnh
     - Vector đặc trưng cuối cùng được sử dụng để:
         + So sánh độ tương đồng giữa các ảnh (cosine similarity)
