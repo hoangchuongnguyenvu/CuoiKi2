@@ -87,7 +87,7 @@ class BOVWSearcher:
         return results[:top_k]
 
 def main():
-    st.title(page_title="Image Search Demo")
+    st.title("Image Search Demo")
     
     # Phần 1: Giới thiệu Dataset
     st.title("Demo Hệ thống Tìm kiếm Ảnh")
