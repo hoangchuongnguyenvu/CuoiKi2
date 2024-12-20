@@ -103,19 +103,21 @@ Mô tả các bước trong quá trình phân đoạn ký tự bằng Watershed 
 
     st.markdown("""
     ### Tham số quan trọng nhất:
-    > **`dist_threshold`** (Ngưỡng khoảng cách)
-    > - Phạm vi: 0.0 → 0.4
-    > - Bước nhảy: 0.01
-    > - Công thức: `threshold = dist_threshold * dist_transform.max()`
-    >
-    > **kernel_size** (Kích thước kernel)
-    > - Kích thước của kernel được sử dụng trong các phép toán hình thái học
-    > - Các giá trị kernel được thử nghiệm:
-    >   * `3x3`
-    >   * `5x5`
-    >   * `7x7`
-    >   * `9x9`
-    >   * `11x11`
+    **dist_threshold** (Ngưỡng khoảng cách)
+                
+    - Phạm vi: 0.0 → 0.4
+    - Bước nhảy: 0.01
+    - Công thức: `threshold = dist_threshold * dist_transform.max()`
+    
+    **kernel_size** (Kích thước kernel)
+                
+    - Kích thước của kernel được sử dụng trong các phép toán hình thái học
+    - Các giá trị kernel được thử nghiệm:
+        * `3x3`
+        * `5x5`
+        * `7x7`
+        * `9x9`
+        * `11x11`
     """)
 
     st.write("Các tham số này có thể được điều chỉnh để tối ưu hóa kết quả phân đoạn cho các loại hình ảnh khác nhau.")
