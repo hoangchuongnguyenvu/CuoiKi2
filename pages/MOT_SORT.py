@@ -208,13 +208,13 @@ def main():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.image(image1, caption="Frame 49", use_column_width=True)
+        st.image(image1, caption="Frame 49")
 
     with col2:
-        st.image(image2, caption="Frame 50", use_column_width=True)
+        st.image(image2, caption="Frame 50")
 
     with col3:
-        st.image(image3, caption="Frame 55", use_column_width=True)
+        st.image(image3, caption="Frame 55")
     st.markdown("""
     **Diễn biến sự kiện:**
     - Frame 49: Vẫn giữ được tracking
@@ -238,13 +238,13 @@ def main():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.image(image1, caption="Frame 57", use_column_width=True)
+        st.image(image1, caption="Frame 57")
 
     with col2:
-        st.image(image2, caption="Frame 63", use_column_width=True)
+        st.image(image2, caption="Frame 63")
 
     with col3:
-        st.image(image3, caption="Frame 70", use_column_width=True)
+        st.image(image3, caption="Frame 70")
     st.markdown("""
     **Diễn biến sự kiện:**
     - Frame 57: Đối tượng vẫn giữ ID là 2 
