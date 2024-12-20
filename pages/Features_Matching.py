@@ -61,8 +61,7 @@ def main():
         with col:
             st.image(
                 image_paths[i],
-                caption=f"Ảnh gốc {i + 1}",
-                use_column_width=True
+                caption=f"Ảnh gốc {i + 1}"
             )
     
     # Tạo 7 cột cho hàng thứ hai
@@ -73,8 +72,7 @@ def main():
         with col:
             st.image(
                 image_paths[i + 7],  # Lấy 7 ảnh tiếp theo
-                caption=f"Keypoints Groundtruth {i + 8}",
-                use_column_width=True
+                caption=f"Keypoints Groundtruth {i + 8}"
             )
     
     # Nội dung giới thiệu dataset
@@ -115,7 +113,7 @@ def main():
     """)
     # Hiển thị hình ảnh kiến trúc mạng
     st.write("### Kiến trúc tổng quan của SuperPoint")
-    st.image("UIUX/FeaturesMatching/keke.jpg", caption="Kiến trúc mạng SuperPoint", use_column_width=True)
+    st.image("UIUX/FeaturesMatching/keke.jpg", caption="Kiến trúc mạng SuperPoint")
 
     st.markdown("""
 **1. Encoder (Bộ mã hóa)**
@@ -204,8 +202,8 @@ def main():
 
     # Hiển thị biểu đồ
     st.image("UIUX/FeaturesMatching/matching.png", 
-             caption="Biểu đồ Accuracy theo góc quay", 
-             use_column_width=True)
+             caption="Biểu đồ Accuracy theo góc quay"
+             )
 
     # Thêm phần giải thích biểu đồ
     st.write("""
@@ -226,7 +224,7 @@ def main():
     
     col1,col2,col3  = st.columns([1,7,1])
     with col2 :
-      st.image("CNN Architecutre.png",caption="Kiến trúc CNN", use_column_width=True)
+      st.image("CNN Architecutre.png",caption="Kiến trúc CNN")
     st.markdown("""   
     -
       - Có thể thấy rằng CNN sử dụng các bộ lọc nhỏ (ví dụ 3x3, 5x5) để quét qua hình ảnh và trích xuất các đặc trưng cục bộ. Các bộ lọc này có khả năng phát hiện các mẫu như cạnh, góc, và các cấu trúc hình học nhỏ.
@@ -246,7 +244,7 @@ def main():
 """)
     col1,col2,col3  = st.columns([1,7,1])
     with col2 :
-      st.image("467473224_544891085202402_1332492444598727249_n.png",caption="Định hướng đặc trưng", use_column_width=True)
+      st.image("467473224_544891085202402_1332492444598727249_n.png",caption="Định hướng đặc trưng")
     st.markdown("""
     - Dựa vào hình ảnh, ta có thể thấy rằng :
       - Với góc xoay nhỏ (10°), sự thay đổi không quá lớn nên kết quả trên biểu đồ vẫn cao đáng kể.
@@ -261,7 +259,7 @@ def main():
 """)
     col1,col2,col3  = st.columns([1,7,1])
     with col2 :
-      st.image("all_results.png", caption="", use_column_width=True)
+      st.image("all_results.png", caption="")
     st.markdown("""
     - Dựa vào hình ảnh, ta có thể thấy rằng :
       - Sự sai khác giữa các góc xoay không cao tệ nên nhận định SIFT có tính ổn định cao với các góc xoay là khá hợp lí.
