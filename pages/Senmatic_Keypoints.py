@@ -74,13 +74,13 @@ def main():
     row1 = st.columns(5)
     for i, img_path in enumerate(original_images[:5]):  # Lấy 5 ảnh đầu tiên
         with row1[i]:
-            st.image(img_path, caption=f"Ảnh {i+1}", use_column_width=True)
+            st.image(img_path, caption=f"Ảnh {i+1}")
 
 # Hàng 2: Hiển thị 4 ảnh còn lại
     row2 = st.columns(4)
     for i, img_path in enumerate(original_images[5:]):  # Lấy 4 ảnh còn lại
         with row2[i]:
-            st.image(img_path, caption=f"Ảnh {i+6}", use_column_width=True)
+            st.image(img_path, caption=f"Ảnh {i+6}")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
