@@ -282,23 +282,71 @@ xét mới về SIFT và ORB như sau :
     - ORB sẽ vượt trội trong các dữ liệu mà ở đó dữ liệu có các hình dạng đơn giản (tam giác hoặc tứ giác) và có nhiều góc rõ ràng.
                                 
 - Thật vậy, có thể xem thông quá cơ chế hoạt động của hai thuật toán để lý giải vấn đề trên như sau :
-    - Đối với SIFT, ngoài việc dựa trên gradient cường độ pixel nên không phụ thuộc vào góc sắc nét thì việc sử dụng một 
-    descriptor 128 chiều sẽ giúp cho các đặc trưng được phát hiện chi tiết và chính xác hơn
+    - Đối với SIFT, dựa trên gradient cường độ pixel nên không phụ thuộc vào góc sắc nét thì việc sử dụng một 
+    descriptor 128 chiều sẽ giúp cho các đặc trưng được phát hiện chi tiết và chính xác hơn.
 """)
     col1,col2,col3 = st.columns([1,7,1])
     with col2 :
         st.image("feature_detection_analysis.png", caption="Minh họa",use_column_width=True)    
+
+    st.markdown("""
+- Bạn có thể nhìn ở hình ảnh so sánh ở trên của hai phương pháp thì có thể thấy được rằng :
+                
+    - SIFT có Gaussian Scale Space để làm mờ ảnh với nhiều tỉ lệ khác nhau để làm bật lên những chi tiết lớn và làm mờ những chi tiết nhỏ 
+    khiến cho đặc trưng quan trọng có thể được phát hiện ở bất kỳ mức độ chi tiết nào, từ chi tiết nhỏ đến chi tiết lớn, mà không bị ảnh hưởng bởi sự thay đổi về kích thước hay góc sắc nét của hình ảnh gốc.
+    - Đồng thời, DoG giúp làm nổi bật các cạnh và các đặc trưng chính trong hình ảnh bằng cách khi hai hình ảnh Gaussian bị trừ đi nhau, các thay đổi nhanh về cường độ 
+    (các cạnh và góc) sẽ được làm nổi bật. Điều này có nghĩa là DoG sẽ nhấn mạnh các vùng có thay đổi cường độ lớn, giúp phát hiện các đặc trưng mà không phụ thuộc vào hình dạng góc cạnh của hình ảnh ban đầu. 
+    Việc này làm cho SIFT trở nên hiệu quả trong việc phát hiện các đặc trưng ở các hình ảnh mà các góc sắc nét không quan trọng.
+    - Kết hợp với việc có một descriptor 128 chiều làm cho các thông tin về đặc trưng rất chi tiết và chính xác hơn rất nhiều.
+                
+- Còn ở phía ngược lại, trên hình ảnh, ORB cũng phát hiện ra rất nhiều đặc trưng nhưng tỉ lệ sai lệch là rất lớn. Đặc biệt là nằm rất nhiều trên chính đường thẳng 
+. Nguyên nhân chính là do :
+                
+    - ORB sử dụng FAST (Features from Accelerated Segment Test) để phát hiện các keypoints nhưng phương pháp này lại bị ảnh hưởng rất nhiều từ việc phải xuất hiện các góc sắc nét.
+    Do không giống như SIFT - làm bật lên các đặc trưng thông qua gradient cường độ bằng cách làm mờ và đánh giá. Còn ORB lại quan tâm đến sự thay đổi đột ngột 
+    của gradient cường độ để phát hiện ra góc.
+    - Do đó, đối với các đường thẳng - nơi mà các gradient cường độ biến thiên đều đặn thì ORB lại dễ dàng phát hiện ra các điểm keypoints sai lệch.
+    - Tuy vẫn có bộ lọc các keypoint yếu bằng Harris Corner Measure sau khi sử dụng FAST để phát hiện. Nhưng, phương pháp nào cũng có những điểm yếu.
+    Việc tập trung vào chỉ số "cornerness"  để đánh giá đó là góc vẫn chưa đủ toàn diện. Nếu những keypoint có reponse yếu nào vẫn đủ sức vượt qua
+    ngưỡng tối thiểu của chỉ số "cornerness" thì vẫn được tính là một keypoint.
+""")
     st.markdown("""
 - Đối với ORB :       
     - Còn đối với ORB, việc sử dụng FAST (Features from Accelerated Segment Test) là yếu tố phát hiện tốt các góc trong hình ảnh. Nhất
-    là với các hình ảnh có góc sắc nét. Nơi mà có sự giao nhau giữa nhiều đường thẳng hay cạnh trong đa giác. Nhưng ORB lại sử dụng 
-    một descriptor chỉ có 32 chiều nên đôi khi các góc được phát hiện không chi tiết và chính xác như SIFT.
+    là với các hình ảnh có góc sắc nét. Nơi mà có sự giao nhau giữa nhiều đường thẳng hay cạnh trong đa giác.
 """)
     
     col1,col2,col3 = st.columns([1,7,1])
     with col2 :
-        st.image("feature_detection_analysis (1).png", caption="Minh họa",use_column_width=True)
+        st.image("feature_detection_analysis (2).png", caption="Minh họa",use_column_width=True)
 
+    col1,col2,col3 = st.columns([1,7,1])
+    with col2 :
+        st.image("groundtruth_comparison (2).png", caption="Minh họa",use_column_width=True)
+        
+    st.markdown("""
+- Thông qua hai hình ảnh so sánh ở trên, ta có thể đưa ra lí giải cho những nhận xét ở trên như sau :
+    - Đầu tiên, ta có thể thấy được SIFT phát hiện sai toàn bộ với chỉ số Recall và Precision rất thấp. Nguyên nhân là do :
+        - Mặc dù, SIFT sử dụng Gaussian Scale Space và DoG để phát hiện các đặc trưng phức tạp và ổn định. Nên trong một số hình ảnh đa giác đơn giản
+        thì các đặc trưng này có thể không đủ rõ ràng hoặc phức tạp để SIFT phát hiện.
+        - Nếu sự thay đổi cường độ không đủ mạnh hoặc không ổn định, DoG có thể bỏ qua hoặc phát hiện sai điểm cực trị. Điều này dẫn đến việc SIFT không phát hiện đúng các đặc trưng quan trọng trong hình ảnh.
+""")
+    col1,col2,col3 = st.columns([1,5,1])
+    with col2 :
+        st.image("Figure2-aConstruction-of-the-Difference-of-GaussianDoG-scale-space-b-similarity.png", caption="Cực trị trong DoG",use_column_width=True)
 
+    st.markdown("""
+- Còn đối với ORB thì như chúng ta đã biết thì phương pháp rất mạnh trong việc phát hiện các góc thông qua nguyên lí hoạt động của nó.
+""")
+    col1,col2,col3 = st.columns([1,5,1])
+    with col2 :
+        st.image("Example-of-the-FAST-features-from-accelerated-segment-test-feature-detector.png", caption="Nguyên lí hoạt động của FAST",use_column_width=True)
+
+    st.markdown("""
+- 
+    - FAST phát hiện điểm góc bằng cách kiểm tra cường độ của 16 pixel xung quanh pixel trung tâm và xác định nó là điểm góc nếu có ít nhất 9 pixel sáng hơn hoặc tối hơn một ngưỡng xác định.
+
+    - FAST rất mạnh trong việc phát hiện các góc sắc nét, nơi sự thay đổi cường độ lớn và đột ngột.
+""")
 if __name__ == '__main__':
     main()
